@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CET4 英语四级备考 APP - UI 预览</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f23;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            background: #F8F9FC;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(79, 70, 229, 0.3), 0 0 0 12px #1a1a2e;
+        }
+        .screen {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .screen::-webkit-scrollbar { display: none; }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            padding: 60px 24px 24px;
+            border-radius: 0 0 32px 32px;
+            color: white;
+        }
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .avatar {
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px;
+        }
+        .header-info h2 { font-size: 14px; opacity: 0.7; font-weight: 400; }
+        .header-info h1 { font-size: 20px; font-weight: 700; margin-top: 2px; }
+        .streak {
+            display: flex; align-items: center; gap: 4px;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .streak-icon { font-size: 16px; }
+        .goal-text { font-size: 14px; opacity: 0.7; margin-bottom: 8px; }
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 65%;
+            background: #F59E0B;
+            border-radius: 4px;
+        }
+        
+        /* Daily Card */
+        .daily-card {
+            margin: 20px;
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 4px 24px rgba(79, 70, 229, 0.08);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .card-title { font-size: 18px; font-weight: 700; color: #1F2937; }
+        .badge {
+            background: rgba(79, 70, 229, 0.1);
+            color: #4F46E5;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .stats-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 16px;
+            border-radius: 16px;
+        }
+        .stat-item.blue { background: rgba(79, 70, 229, 0.08); }
+        .stat-item.green { background: rgba(16, 185, 129, 0.08); }
+        .stat-item.orange { background: rgba(245, 158, 11, 0.08); }
+        .stat-icon { font-size: 24px; margin-bottom: 8px; }
+        .stat-value { font-size: 20px; font-weight: 700; color: #1F2937; }
+        .stat-label { font-size: 12px; color: #6B7280; margin-top: 2px; }
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        /* Quick Actions */
+        .section { padding: 0 20px; margin-bottom: 20px; }
+        .section-title { font-size: 18px; font-weight: 700; color: #1F2937; margin-bottom: 16px; }
+        .actions-grid {
+            display: flex;
+            gap: 8px;
+        }
+        .action-btn {
+            flex: 1;
+            background: white;
+            border-radius: 20px;
+            padding: 16px 8px;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .action-btn:hover { transform: translateY(-2px); }
+        .action-icon {
+            width: 44px; height: 44px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 22px;
+        }
+        .action-label { font-size: 12px; color: #4B5563; font-weight: 500; }
+        
+        /* Overview Card */
+        .overview-card {
+            margin: 0 20px 20px;
+            background: linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 100%);
+            border-radius: 24px;
+            padding: 20px;
+        }
+        .overview-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 16px;
+        }
+        .overview-item { text-align: center; }
+        .overview-value { font-size: 20px; font-weight: 700; }
+        .overview-label { font-size: 11px; margin-top: 4px; opacity: 0.7; }
+        .overview-progress {
+            height: 6px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .overview-progress-fill {
+            height: 100%;
+            width: 42%;
+            background: #2563EB;
+            border-radius: 3px;
+        }
+        
+        /* Review Forecast */
+        .forecast-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 0 20px;
+        }
+        .forecast-scroll::-webkit-scrollbar { display: none; }
+        .forecast-item {
+            min-width: 72px;
+            padding: 12px;
+            background: white;
+            border-radius: 20px;
+            text-align: center;
+        }
+        .forecast-item.today {
+            background: #4F46E5;
+            color: white;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+        .forecast-day { font-size: 12px; opacity: 0.5; margin-bottom: 4px; }
+        .forecast-count { font-size: 22px; font-weight: 700; }
+        .forecast-unit { font-size: 11px; opacity: 0.5; margin-top: 2px; }
+        
+        /* Bottom Nav */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0; right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 14px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .nav-item.active {
+            background: rgba(79, 70, 229, 0.12);
+        }
+        .nav-item.active .nav-icon {
+            color: #4F46E5;
+            transform: scale(1.15);
+        }
+        .nav-item.active .nav-label {
+            color: #4F46E5;
+            font-weight: 600;
+        }
+        .nav-icon {
+            font-size: 22px;
+            color: #9CA3AF;
+            transition: all 0.25s;
+        }
+        .nav-label {
+            font-size: 10px;
+            color: #9CA3AF;
+            margin-top: 2px;
+            transition: all 0.25s;
+        }
+        
+        /* Content padding for nav */
+        .content-bottom { padding-bottom: 80px; }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="screen">
+            <div class="content-bottom">
+                <!-- Header -->
+                <div class="header">
+                    <div class="header-top">
+                        <div class="avatar">👤</div>
+                        <div class="header-info" style="flex:1;">
+                            <h2>下午好</h2>
+                            <h1>CET4 备考达人</h1>
+                        </div>
+                        <div class="streak">
+                            <span class="streak-icon">🔥</span>
+                            <span>12 天</span>
+                        </div>
+                    </div>
+                    <div class="goal-text">今日目标：10 个单词</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+                
+                <!-- Daily Progress Card -->
+                <div class="daily-card">
+                    <div class="card-header">
+                        <div class="card-title">今日学习</div>
+                        <div class="badge">6 词</div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-item blue">
+                            <div class="stat-icon" style="color:#4F46E5;">📚</div>
+                            <div class="stat-value">128</div>
+                            <div class="stat-label">累计学习</div>
+                        </div>
+                        <div class="stat-item green">
+                            <div class="stat-icon" style="color:#10B981;">✅</div>
+                            <div class="stat-value">86</div>
+                            <div class="stat-label">已掌握</div>
+                        </div>
+                        <div class="stat-item orange">
+                            <div class="stat-icon" style="color:#F59E0B;">🔄</div>
+                            <div class="stat-value">15</div>
+                            <div class="stat-label">待复习</div>
+                        </div>
+                    </div>
+                    <button class="btn-primary">
+                        <span>▶</span> 开始学习
+                    </button>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="section">
+                    <div class="section-title">快速入口</div>
+                    <div class="actions-grid">
+                        <div class="action-btn">
+                            <div class="action-icon" style="background:rgba(139,92,246,0.12);color:#8B5CF6;">🎧</div>
+                            <div class="action-label">听力专项</div>
+                        </div>
+                        <div class="action-btn">
+                            <div class="action-icon" style="background:rgba(236,72,153,0.12);color:#EC4899;">✍️</div>
+                            <div class="action-label">写作翻译</div>
+                        </div>
+                        <div class="action-btn">
+                            <div class="action-icon" style="background:rgba(245,158,11,0.12);color:#F59E0B;">⏱️</div>
+                            <div class="action-label">模拟考试</div>
+                        </div>
+                        <div class="action-btn">
+                            <div class="action-icon" style="background:rgba(16,185,129,0.12);color:#10B981;">✨</div>
+                            <div class="action-label">AI助手</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Overview -->
+                <div class="section">
+                    <div class="section-title">学习概览</div>
+                    <div class="overview-card">
+                        <div class="overview-stats">
+                            <div class="overview-item">
+                                <div class="overview-value" style="color:#2563EB;">128</div>
+                                <div class="overview-label">总词汇</div>
+                            </div>
+                            <div class="overview-item">
+                                <div class="overview-value" style="color:#059669;">67.2%</div>
+                                <div class="overview-label">掌握率</div>
+                            </div>
+                            <div class="overview-item">
+                                <div class="overview-value" style="color:#D97706;">27</div>
+                                <div class="overview-label">学习中</div>
+                            </div>
+                            <div class="overview-item">
+                                <div class="overview-value" style="color:#DC2626;">15</div>
+                                <div class="overview-label">需复习</div>
+                            </div>
+                        </div>
+                        <div class="overview-progress">
+                            <div class="overview-progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Review Forecast -->
+                <div class="section">
+                    <div class="section-title">复习预测</div>
+                    <div class="forecast-scroll">
+                        <div class="forecast-item today">
+                            <div class="forecast-day">今天</div>
+                            <div class="forecast-count">15</div>
+                            <div class="forecast-unit">词</div>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="forecast-day">明天</div>
+                            <div class="forecast-count" style="color:#1F2937;">8</div>
+                            <div class="forecast-unit">词</div>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="forecast-day">周三</div>
+                            <div class="forecast-count" style="color:#1F2937;">12</div>
+                            <div class="forecast-unit">词</div>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="forecast-day">周四</div>
+                            <div class="forecast-count" style="color:#1F2937;">5</div>
+                            <div class="forecast-unit">词</div>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="forecast-day">周五</div>
+                            <div class="forecast-count" style="color:#1F2937;">20</div>
+                            <div class="forecast-unit">词</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Navigation -->
+            <div class="bottom-nav">
+                <div class="nav-item active">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-label">首页</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">📖</div>
+                    <div class="nav-label">词汇</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">📝</div>
+                    <div class="nav-label">题库</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">🤖</div>
+                    <div class="nav-label">AI</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-label">我的</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
