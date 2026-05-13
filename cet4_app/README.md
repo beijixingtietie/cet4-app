@@ -110,21 +110,19 @@ lib/
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.6
-  sqflite: ^2.3.0
-  path: ^1.8.3
   provider: ^6.1.1
   shared_preferences: ^2.2.2
-  just_audio: ^0.9.36
   dio: ^5.4.0
+  path: ^1.8.3
+  sqflite: ^2.3.0
+  file_picker: ^8.0.0
+  syncfusion_flutter_pdf: ^26.1.35
+  fl_chart: ^0.69.0
+  just_audio: ^0.9.36
+  audio_session: ^0.1.18
+  flutter_local_notifications: ^18.0.1
+  timezone: ^0.10.0
   intl: ^0.19.0
-  percent_indicator: ^4.2.3
-  fl_chart: ^0.66.0
-  table_calendar: ^3.0.9
-  flutter_slidable: ^3.0.1
-  cached_network_image: ^3.3.1
-  flutter_markdown: ^0.6.18
-  uuid: ^4.2.1
 ```
 
 ## 安全与隐私
