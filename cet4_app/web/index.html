@@ -61,5 +61,14 @@
     </div>
   </div>
   <script src="flutter_bootstrap.js" async></script>
+  <script>
+    var checkLoaded = setInterval(function() {
+      if (document.querySelector('flt-glass-pane')) {
+        var el = document.getElementById('loading-status');
+        if (el) el.style.display = 'none';
+        clearInterval(checkLoaded);
+      }
+    }, 500);
+  </script>
 </body>
 </html>
