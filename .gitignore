@@ -101,7 +101,8 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# Note: lib/ is excluded for Python packages, but Flutter's lib/ is needed
+# lib/  # Commented out - Flutter project uses lib/ for Dart source code
 lib64/
 parts/
 sdist/
